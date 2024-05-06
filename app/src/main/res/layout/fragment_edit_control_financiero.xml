@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditControlFinancieroFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/textMonto"
+            android:layout_width="350dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/TextoMonto"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/saveMovimientoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="50dp"
+            android:text="Guardar"
+            app:layout_constraintEnd_toStartOf="@+id/exitButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/captureButton" />
+
+        <Spinner
+            android:id="@+id/tipoMovimientoSpinner"
+            android:layout_width="122dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toEndOf="@+id/textoTipo"
+            app:layout_constraintTop_toBottomOf="@+id/calendario" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="290dp"
+            android:layout_height="188dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tipoMovimientoSpinner" />
+
+        <Button
+            android:id="@+id/captureButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Capturar Imagen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/TextoMonto"
+            android:layout_width="55dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:text="Monto:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/TextoFecha"
+            android:layout_width="55dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:text="Fecha:"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/TextoMonto"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:id="@+id/textoTipo"
+            android:layout_width="55dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:text="Tipo:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextoFecha" />
+
+        <EditText
+            android:id="@+id/calendario"
+            android:layout_width="350dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/TextoFecha"
+            app:layout_constraintTop_toBottomOf="@+id/textMonto" />
+
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="50dp"
+            android:text="Salir"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/saveMovimientoButton"
+            app:layout_constraintTop_toBottomOf="@+id/captureButton" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
