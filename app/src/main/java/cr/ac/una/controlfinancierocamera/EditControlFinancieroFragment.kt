@@ -6,7 +6,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
@@ -22,10 +21,14 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.drawToBitmap
+import androidx.lifecycle.lifecycleScope
+import cr.ac.una.controlfinancierocamera.dao.MovimientoDAO
+import cr.ac.una.controlfinancierocamera.db.AppDatabase
 import cr.ac.una.controlfinancierocamera.entity.Movimiento
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Calendar
 
 
@@ -60,6 +63,8 @@ class EditControlFinancieroFragment() : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        lateinit var movimientoDao: MovimientoDAO
+        movimientoDao = AppDatabase.getInstance(requireContext()).ubicacionDao()
         var monto = view.findViewById<TextView>(R.id.textMonto)
         monto.setText(movimientoModificar.monto.toString())
 
@@ -67,7 +72,7 @@ class EditControlFinancieroFragment() : Fragment() {
         imageView = view.findViewById(R.id.imageView)
         if(imageView != null){
 
-            imageView.setImageBitmap(movimientoModificar.imagen)
+            //imageView.setImageBitmap(movimientoModificar.imagen)
         }
 
 
@@ -125,17 +130,24 @@ class EditControlFinancieroFragment() : Fragment() {
         botonNuevo.setOnClickListener {
             var montoFinal = decimales(monto)
 
-            val movimiento = Movimiento(null, montoFinal, elementoSeleccionado, fecha.text.toString(), imageView.drawToBitmap())
+            val movimiento = Movimiento(null,null, montoFinal, elementoSeleccionado, fecha.text.toString())//, imageView.drawToBitmap())
 
-            if(movimientoModificar.monto== 0.0||movimientoModificar.tipo==""||movimientoModificar.fecha==""||movimientoModificar.imagen==(Bitmap.createBitmap(1,1,Bitmap.Config.ALPHA_8))){
-                val actividad = activity as MainActivity
+            if(movimientoModificar.monto== 0.0||movimientoModificar.tipo==""||movimientoModificar.fecha==""){//||movimientoModificar.imagen==(Bitmap.createBitmap(1,1,Bitmap.Config.ALPHA_8))){
+                lifecycleScope.launch {
+                    withContext(Dispatchers.Default) {
+                        movimientoDao.insert(movimiento)
+                        fragmentManager?.popBackStack()
+                    }
+                }
+                //-----------------------------------Con apis---------------------------------------------
+                /* val actividad = activity as MainActivity
                 GlobalScope.launch(Dispatchers.IO) {
                     actividad.movimientoController.insertMovimiento(movimiento)
                     // Regresar al fragmento anterior
                     val fragmentManager = requireActivity().supportFragmentManager
-                    fragmentManager.popBackStack()
-                }
-            }else{
+                    fragmentManager.popBackStack()*/
+
+            }/*else{
                 val montoNuevo = view.findViewById<TextView>(R.id.textMonto)
                 movimientoModificar.monto = decimales(montoNuevo)
                 val fechaNuevo = view.findViewById<TextView>(R.id.calendario)
@@ -143,7 +155,7 @@ class EditControlFinancieroFragment() : Fragment() {
                 val tipoNuevo = view.findViewById<Spinner>(R.id.tipoMovimientoSpinner)
                 movimientoModificar.tipo = elementoSeleccionado
                 val imageViewNuevo = view.findViewById<ImageView>(R.id.imageView)
-                /*movimientoModificar.imagen = imageView.drawToBitmap()*/
+               /* movimientoModificar.imagen = imageViewNuevo.drawToBitmap()*/
 
                 val actividad = activity as MainActivity
                 GlobalScope.launch(Dispatchers.Main) {
@@ -152,7 +164,7 @@ class EditControlFinancieroFragment() : Fragment() {
                     val fragmentManager = requireActivity().supportFragmentManager
                     fragmentManager.popBackStack()
                 }
-            }
+            }*/
 
         }
 

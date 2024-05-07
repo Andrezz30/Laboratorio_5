@@ -50,14 +50,14 @@ class MovimientoAdapter (context:Context, movimientos:List<Movimiento>):
                 .setTitle("Confirmar eliminación")
                 .setMessage("Esta accion es irrebersible, ¿Desea eliminar esta transacción?")
                 .setPositiveButton("Sí") { dialog, which ->
-                    val mainActivity = context as MainActivity
+                   /* val mainActivity = context as MainActivity
                     GlobalScope.launch(Dispatchers.Main) {
                         movimiento?.let { it1 -> mainActivity.movimientoController.deleteMovimiento(it1) }
                         clear()
                         addAll(mainActivity.movimientoController.listMovimientos())
                         notifyDataSetChanged()
                         notifyDataSetChanged()
-                    }
+                    }*/
                 }
                 .setNegativeButton("No", null)
                 .show()

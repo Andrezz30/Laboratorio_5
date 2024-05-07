@@ -13,7 +13,7 @@ class MovimientoController {
 
 
 
-    suspend fun insertMovimiento(movimiento: Movimiento){
+    /*suspend fun insertMovimiento(movimiento: Movimiento){
 
             var movimientos: ArrayList<Movimiento> = arrayListOf()
             movimientos.add(movimiento)
@@ -28,7 +28,8 @@ class MovimientoController {
     }
     suspend fun  listMovimientos():ArrayList<Movimiento>{
             return movimientoService.apiService.getItems().items as ArrayList<Movimiento>
-    }
+    }*/
+
 
 
 }
