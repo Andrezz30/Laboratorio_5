@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ListView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import cr.ac.una.controlfinanciero.adapter.MovimientoAdapter
 import cr.ac.una.controlfinancierocamera.EditControlFinancieroFragment
@@ -16,6 +17,7 @@ import cr.ac.una.controlfinancierocamera.R
 import cr.ac.una.controlfinancierocamera.dao.MovimientoDAO
 import cr.ac.una.controlfinancierocamera.db.AppDatabase
 import cr.ac.una.controlfinancierocamera.entity.Movimiento
+import cr.ac.una.controlfinancierocamera.viewmodel.MovimientoViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -61,6 +63,13 @@ class ListControlFinancieroFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val listView = view.findViewById<ListView>(R.id.listaMovimientos)
+        var movientosViewModel = ViewModelProvider(requireActivity()).get(MovimientoViewModel::class.java)
+        var movimientos = mutableListOf<Movimiento>()
+        var adapter = MovimientoAdapter(requireContext(), movimientos as ArrayList<Movimiento>)
+        listView.adapter = adapter
+        movientosViewModel.movimientos.observe(requireActivity()){
+            (listView.adapter as? MovimientoViewModel)?.updateMovimiento(movimientos)
+        }
 
         lifecycleScope.launch(Dispatchers.Main) {
             try {

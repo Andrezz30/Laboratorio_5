@@ -25,6 +25,7 @@ import androidx.lifecycle.lifecycleScope
 import cr.ac.una.controlfinancierocamera.dao.MovimientoDAO
 import cr.ac.una.controlfinancierocamera.db.AppDatabase
 import cr.ac.una.controlfinancierocamera.entity.Movimiento
+import cr.ac.una.controlfinancierocamera.viewmodel.MovimientoViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -64,8 +65,10 @@ class EditControlFinancieroFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lateinit var movimientoDao: MovimientoDAO
+        var movimientoView = MovimientoViewModel()
         movimientoDao = AppDatabase.getInstance(requireContext()).ubicacionDao()
         var monto = view.findViewById<TextView>(R.id.textMonto)
+
         monto.setText(movimientoModificar.monto.toString())
 
 
@@ -139,6 +142,7 @@ class EditControlFinancieroFragment() : Fragment() {
                         fragmentManager?.popBackStack()
                     }
                 }
+
                 //-----------------------------------Con apis---------------------------------------------
                 /* val actividad = activity as MainActivity
                 GlobalScope.launch(Dispatchers.IO) {
@@ -147,7 +151,24 @@ class EditControlFinancieroFragment() : Fragment() {
                     val fragmentManager = requireActivity().supportFragmentManager
                     fragmentManager.popBackStack()*/
 
-            }/*else{
+            }else{
+                val montoNuevo = view.findViewById<TextView>(R.id.textMonto)
+                movimientoModificar.monto = decimales(montoNuevo)
+                val fechaNuevo = view.findViewById<TextView>(R.id.calendario)
+                movimientoModificar.fecha = fechaNuevo.text.toString()
+                val tipoNuevo = view.findViewById<Spinner>(R.id.tipoMovimientoSpinner)
+                movimientoModificar.tipo = tipoNuevo.selectedItem.toString()
+               /* val imageViewNuevo = view.findViewById<ImageView>(R.id.imageView)*/
+                /* movimientoModificar.imagen = imageViewNuevo.drawToBitmap()*/
+                lifecycleScope.launch {
+                    withContext(Dispatchers.Default) {
+                        movimientoDao.update(movimientoModificar)
+                        fragmentManager?.popBackStack()
+                    }
+                }
+            }
+            //-----------------------------------Con apis---------------------------------------------
+            /*else{
                 val montoNuevo = view.findViewById<TextView>(R.id.textMonto)
                 movimientoModificar.monto = decimales(montoNuevo)
                 val fechaNuevo = view.findViewById<TextView>(R.id.calendario)

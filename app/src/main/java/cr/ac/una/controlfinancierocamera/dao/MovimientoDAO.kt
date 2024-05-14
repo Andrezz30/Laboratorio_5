@@ -1,8 +1,10 @@
 package cr.ac.una.controlfinancierocamera.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import cr.ac.una.controlfinancierocamera.entity.Movimiento
 import cr.ac.una.controlfinancierocamera.entity.Movimientos
 import retrofit2.http.*
@@ -14,4 +16,11 @@ interface MovimientoDAO {
 
         @Query("SELECT * FROM movimiento")
         fun getAll(): List<Movimiento?>?
+
+        @Update
+        fun update(entity: Movimiento)
+
+        @Delete
+        suspend fun delete(movimiento: Movimiento)
+
 }
